@@ -59,6 +59,11 @@ public class Block {
         this.hash = hash;
     }
 
+    /**
+     * Hash Calculation
+     * Calculates the hash of a block
+     * @return hexadecimal string
+     */
     public String calculateHash() {
         String text = String.valueOf(index + previousHash + String.valueOf(timestamp) + String.valueOf(data));
         MessageDigest messageDigest = null;
