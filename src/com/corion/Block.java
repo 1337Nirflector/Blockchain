@@ -11,6 +11,14 @@ public class Block {
     private String previousHash;
     private String hash;
 
+    Block(int index, String data, String previousHash) {
+        this.index = index;
+        this.data = data;
+        this.previousHash = previousHash;
+        this.timestamp = System.currentTimeMillis();
+        this.hash = calculateHash();
+    }
+
     public int getIndex() {
         return index;
     }
@@ -51,9 +59,14 @@ public class Block {
         this.hash = hash;
     }
 
-    public String calculateHash() throws NoSuchAlgorithmException {
+    public String calculateHash() {
         String text = String.valueOf(index + previousHash + String.valueOf(timestamp) + String.valueOf(data));
-        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        MessageDigest messageDigest = null;
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
         final byte bytes[] = messageDigest.digest(text.getBytes());
         final StringBuilder hexString = new StringBuilder();
